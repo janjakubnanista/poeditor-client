@@ -1,0 +1,30 @@
+{
+  "name": "poeditor-client",
+  "version": "0.0.1",
+  "description": "JavaScript cient for POEditor translations solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test test/*_test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janjakubnanista/poeditor-client.git"
+  },
+  "keywords": [
+    "POEditor",
+    "translations",
+    "localisation",
+    "i18n",
+    "l10n"
+  ],
+  "author": "Ján Jakub Naništa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janjakubnanista/poeditor-client/issues"
+  },
+  "homepage": "https://github.com/janjakubnanista/poeditor-client#readme",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.3.4"
+  }
+}
