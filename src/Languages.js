@@ -28,4 +28,12 @@ Languages.prototype.delete = function(code) {
     return new Language(this.__token, this.__projectId, { code: code }).delete();
 };
 
+Languages.prototype.setAsReference = function(code) {
+    return new Language(this.__token, this.__projectId, { code: code }).setAsReference();
+};
+
+Languages.prototype.unsetAsReference = function(code) {
+    return new Language(this.__token, this.__projectId, { code: code }).unsetAsReference();
+};
+
 module.exports = Languages;

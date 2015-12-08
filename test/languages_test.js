@@ -120,4 +120,40 @@ describe('Languages', function() {
             this.deferred.reject();
         });
     });
+
+    describe('unsetAsReference()', function() {
+        it('should return a promise', function() {
+            expect(this.languages.unsetAsReference('de_DE').then).to.be.a(Function);
+        });
+
+        it('should send clear_reference_language action', function() {
+            this.languages.unsetAsReference('de_DE');
+
+            expect(this.call.calledWith('my token', { action: 'clear_reference_language', language: 'de_DE', id: 123 })).to.be(true);
+        });
+
+        it('should reject if underlying call rejects', function(done) {
+            this.languages.unsetAsReference('de_DE').done(null, function() { done(); });
+
+            this.deferred.reject();
+        });
+    });
+
+    describe('setAsReference()', function() {
+        it('should return a promise', function() {
+            expect(this.languages.setAsReference('de_DE').then).to.be.a(Function);
+        });
+
+        it('should send set_reference_language action', function() {
+            this.languages.setAsReference('de_DE');
+
+            expect(this.call.calledWith('my token', { action: 'set_reference_language', language: 'de_DE', id: 123 })).to.be(true);
+        });
+
+        it('should reject if underlying call rejects', function(done) {
+            this.languages.setAsReference('de_DE').done(null, function() { done(); });
+
+            this.deferred.reject();
+        });
+    });
 });
