@@ -18,4 +18,16 @@ Language.prototype.delete = function() {
     }.bind(this));
 };
 
+Language.prototype.setAsReference = function() {
+    return utils.call(this.__token, { action: 'set_reference_language', id: this.__projectId, language: this.code }).then(function(response) {
+        return null;
+    }.bind(this));
+};
+
+Language.prototype.unsetAsReference = function() {
+    return utils.call(this.__token, { action: 'clear_reference_language', id: this.__projectId, language: this.code }).then(function(response) {
+        return null;
+    }.bind(this));
+};
+
 module.exports = Language;
