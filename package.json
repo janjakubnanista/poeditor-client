@@ -1,6 +1,6 @@
 {
   "name": "poeditor-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JavaScript cient for POEditor translations solution",
   "main": "src/Client.js",
   "scripts": {
