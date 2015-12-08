@@ -19,9 +19,7 @@ Languages.prototype.list = function() {
 };
 
 Languages.prototype.add = function(code) {
-    return utils.call(this.__token, { action: 'add_language', id: this.__projectId, language: code }).then(function(response) {
-        return null;
-    }.bind(this));
+    return utils.call(this.__token, { action: 'add_language', id: this.__projectId, language: code }).then(function() {});
 };
 
 Languages.prototype.delete = function(code) {
