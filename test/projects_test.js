@@ -145,22 +145,22 @@ describe('Projects', function() {
         });
     });
 
-    describe('create()', function() {
+    describe('add()', function() {
         it('should return a promise', function() {
-            expect(this.projects.create('A Project', 'Some description').then).to.be.a(Function);
+            expect(this.projects.add('A Project', 'Some description').then).to.be.a(Function);
         });
 
         it('should send create_project action', function() {
-            this.projects.create('A Project', 'Some description');
+            this.projects.add('A Project', 'Some description');
 
             expect(this.call.calledWith('my token', { action: 'create_project', name: 'A Project', description: 'Some description' })).to.be(true);
         });
 
         it('should resolve with a Project object', function(done) {
-            // .create() calls .get() internally
+            // .add() calls .get() internally
             this.call.withArgs('my token', { action: 'view_project', id: 123 }).returns(q({ item: {} }));
 
-            this.projects.create('A Project', 'Some description').done(function(project) {
+            this.projects.add('A Project', 'Some description').done(function(project) {
                 expect(project).to.be.a(Project);
 
                 done();
@@ -170,10 +170,10 @@ describe('Projects', function() {
         });
 
         it('should populate project object', function(done) {
-            // .create() calls .get() internally
+            // .add() calls .get() internally
             this.call.withArgs('my token', { action: 'view_project', id: 123 }).returns(q({ item: { id: 123, name: 'A Project' } }));
 
-            this.projects.create('A Project', 'Some description').done(function(project) {
+            this.projects.add('A Project', 'Some description').done(function(project) {
                 expect(project.id).to.be(123);
                 expect(project.name).to.be('A Project');
 
@@ -184,7 +184,7 @@ describe('Projects', function() {
         });
 
         it('should reject if underlying call rejects', function(done) {
-            this.projects.create('A Project', 'Some description').done(null, function() { done(); });
+            this.projects.add('A Project', 'Some description').done(null, function() { done(); });
 
             this.deferred.reject();
         });
