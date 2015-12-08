@@ -2,9 +2,10 @@
   "name": "poeditor-client",
   "version": "0.0.1",
   "description": "JavaScript cient for POEditor translations solution",
-  "main": "index.js",
+  "main": "src/Client.js",
   "scripts": {
-    "test": "mocha test test/*_test.js"
+    "test": "mocha test test/*_test.js",
+    "tdd": "mocha test --watch test/*_test.js --watch src/*.js test/*_test.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,7 @@
     "babel-eslint": "^4.1.6",
     "expect.js": "^0.3.1",
     "mocha": "^2.3.4",
-    "sinon": "^1.17.2",
+    "sinon": "^1.17.2"
   },
   "dependencies": {
     "object-assign": "^4.0.1",
