@@ -4,9 +4,8 @@ var Languages = require('./Languages');
 var utils = require('./utils');
 
 function Project(token, data) {
-    this.__token = token;
-
     Object.defineProperties(this, {
+        __token: { value: token },
         languages: { value: new Languages(token, data.id) },
 
         id: { value: data.id, enumerable: true },

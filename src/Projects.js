@@ -4,7 +4,9 @@ var Project = require('./Project');
 var utils = require('./utils');
 
 function Projects(token) {
-    this.__token = token;
+    Object.defineProperties(this, {
+        __token: { value: token }
+    });
 }
 
 Projects.prototype.list = function() {
