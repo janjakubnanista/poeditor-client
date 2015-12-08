@@ -17,6 +17,8 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 ### Components
 
 - [Projects](#components.projects)
+	- [Project](#components.project)
+	- [Language](#components.language)
 
 #### Projects<a id="components.projects"></a>
 
@@ -55,3 +57,32 @@ Retrieve details about a single project identified by its `id`. This method retu
 	)
 
 Create new POEditor project with given name and optional description. This method returns a promise that resolves with newly created `Project` object. See [Project section](#components.project) for more info on `Project` objects.
+
+#### Project<a id="components.project"></a>
+
+`Project` represents a single POEditor project (so wow much unexpected). You can obtain an instance of `Project` by querying [Projects](#components.projects) submodule.
+
+Apart from methods listed below every `Project` has following read-only properties:
+
+- `string|number id`
+- `string name`
+- `bool public`
+- `bool open`
+- `string created`
+- `string reference_langugage`
+
+##### listLanguages
+
+	Promise<Array<Language>> listLanguages()
+
+Lists the project languages. This method returns a promise that resolves with an array of `Language` objects. See [Language section](#components.langugage) for more info on `Language` objects.
+
+#### Language<a id="components.language"></a>
+
+`Language` represents a single POEditor language.
+
+Every `Language` has following read-only properties:
+
+- `string code`
+- `string name`
+- `number percentage`
