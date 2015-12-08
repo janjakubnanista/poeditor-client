@@ -17,8 +17,9 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 ### Components
 
 - [Projects](#components.projects)
-	- [Project](#components.project)
-	- [Language](#components.language)
+- [Project](#components.project)
+- [Languages](#components.languages)
+- [Language](#components.language)
 
 #### Projects<a id="components.projects"></a>
 
@@ -62,7 +63,7 @@ Create new POEditor project with given name and optional description. This metho
 
 `Project` represents a single POEditor project (so wow much unexpected). You can obtain an instance of `Project` by querying [Projects](#components.projects) submodule.
 
-Apart from methods listed below every `Project` has following read-only properties:
+Every `Project` has following read-only properties:
 
 - `string|number id`
 - `string name`
@@ -70,12 +71,59 @@ Apart from methods listed below every `Project` has following read-only properti
 - `bool open`
 - `string created`
 - `string reference_langugage`
+- `Languages languages` See [Languages section] for more info on `Languages` object.
 
-##### listLanguages
+#### Languages<a id="components.languages"></a>
 
-	Promise<Array<Language>> listLanguages()
+`Languages` provides an access to project's languages. You can list, add or delete project languages using this object.
+
+##### constructor
+
+	new Languages(
+		string token,
+		string|number projectID
+	)
+	
+Creates new instance of `Languages` class. You have to pass POEditor API access token and a Project ID. You should not need to call this constructor manually, instead use `languages` property on a `Project` instance.
+
+
+##### list
+
+	Promise<Array<Language>> list()
 
 Lists the project languages. This method returns a promise that resolves with an array of `Language` objects. See [Language section](#components.langugage) for more info on `Language` objects.
+
+##### add
+
+	Promise<void> add(
+		string code
+	)
+
+Adds a language with language code `code` to project. The returned promise resolves with no arguments.
+
+##### delete
+
+	Promise<void> delete(
+		string code
+	)
+
+Deletes a language with language code `code` from project. The returned promise resolves with no arguments.
+
+##### setAsReference
+
+	Promise<void> setAsReference(
+		string code
+	)
+
+Sets a language with language code `code` as a reference language for project. The returned promise resolves with no arguments.
+
+##### unsetAsReference
+
+	Promise<void> unsetAsReference(
+		string code
+	)
+
+Unsets a language with language code `code` as a reference language for project. The returned promise resolves with no arguments.
 
 #### Language<a id="components.language"></a>
 
