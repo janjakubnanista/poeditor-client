@@ -20,6 +20,8 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 - [Project](#components.project)
 - [Languages](#components.languages)
 - [Language](#components.language)
+- [Terms](#components.terms)
+- [Term](#components.term)
 
 #### Projects<a id="components.projects"></a>
 
@@ -71,7 +73,8 @@ Every `Project` has following read-only properties:
 - `bool open`
 - `string created`
 - `string reference_langugage`
-- `Languages languages` See [Languages section] for more info on `Languages` object.
+- `Languages languages` See [Languages section](#components.languages) for more info on `Languages` object.
+- `Terms terms` See [Terms section](#components.terms) for more info on `Terms` object.
 
 #### Languages<a id="components.languages"></a>
 
@@ -129,8 +132,85 @@ Unsets a language with language code `code` as a reference language for project.
 
 `Language` represents a single POEditor language.
 
+##### constructor
+
+	new Language(
+		string token,
+		string|number projectID,
+		object data
+	)
+	
+Creates new instance of `Language` class. You have to pass POEditor API access token, Project ID and a hash of language `data`:
+
+	{
+		string code,
+		[string name]
+		[string percentage]
+	}
+
+You only need to specify `code` for methods on this object to work. You should not need to call this constructor manually, instead use `languages` property on a `Project` instance to get a list of language objects.
+
 Every `Language` has following read-only properties:
 
 - `string code`
 - `string name`
 - `number percentage`
+- `Terms terms` See [Terms section](#components.terms) for more info on `Terms` object.
+
+#### Terms<a id="components.terms"></a>
+
+`Terms` object lets you access and manipulate individual terms.
+
+##### constructor
+
+	new Terms(
+		string token,
+		string|number projectID,
+		[string languageCode]
+	)
+
+Creates new instance of `Terms` class. You have to pass POEditor API access token, Project ID and optionally a language code (if you're interested in translations too). You should not need to call this constructor manually, instead use `terms` property on either `Project` or `Language` instance.
+
+##### list
+
+	Promise<Array<Term>> list()
+
+Lists the terms. This method returns a promise that resolves with an array of `Term` objects. See [Term section](#components.term) for more info on `Term` objects.
+
+#### Term<a id="components.term"></a>
+
+`Term` represents a single POEditor term.
+
+##### constructor
+
+	new Term(
+		string token,
+		string|number projectID,
+		string languageCode,
+		object data
+	)
+	
+Creates new instance of `Term` class. You have to pass POEditor API access token, Project ID, language code (can be empty) and a hash of term `data`:
+
+	{
+		string term,
+		string context,
+		[string reference],
+		[string created],
+		[string updated],
+		[array<string> tags],
+		[object definition]
+	}
+
+You only need to specify `term` and `context` for methods on this object to work. You should not need to call this constructor manually, instead use `terms` property on either `Project` or `Language` instance to get a list of `Term` objects.
+
+Every `Term` has following read-only properties:
+
+- `string term`
+- `string context`
+- `string reference`
+- `string created`
+- `string updated`
+- `array<string> tags`
+- `string translation`
+- `bool fuzzy`
