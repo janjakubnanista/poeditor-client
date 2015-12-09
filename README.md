@@ -157,6 +157,25 @@ Every `Language` has following read-only properties:
 - `number percentage`
 - `Terms terms` See [Terms section](#components.terms) for more info on `Terms` object.
 
+##### delete
+
+	Promise<void> delete()
+
+Deletes a language from project. The returned promise resolves with no arguments.
+
+##### setAsReference
+
+	Promise<void> setAsReference()
+
+Sets a language as a reference language for project. The returned promise resolves with no arguments.
+
+##### unsetAsReference
+
+	Promise<void> unsetAsReference()
+
+Unsets a language as a reference language for project. The returned promise resolves with no arguments.
+
+
 #### Terms<a id="components.terms"></a>
 
 `Terms` object lets you access and manipulate individual terms.
