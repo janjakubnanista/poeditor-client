@@ -2,29 +2,10 @@
 
 require('mocha');
 var expect = require('expect.js');
-var sinon = require('sinon');
-var utils = require('../src/utils');
-var q = require('q');
 
-var Language = require('../src/Language');
 var Project = require('../src/Project');
 
 describe('Project', function() {
-    beforeEach(function() {
-        this.deferred = q.defer();
-
-        this.call = sinon.stub(utils, 'call').returns(this.deferred.promise);
-        this.project = new Project('my token', { id: 123, name: 'A Project' });
-    });
-
-    afterEach(function() {
-        this.call.restore();
-
-        delete this.call;
-        delete this.deferred;
-        delete this.project;
-    });
-
     describe('new Project(token, params)', function() {
         function testProperty(name, value, expected) {
             var params = {};
