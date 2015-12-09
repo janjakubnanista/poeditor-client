@@ -1,12 +1,14 @@
 'use strict';
 
 var Languages = require('./Languages');
+var Terms = require('./Terms');
 var utils = require('./utils');
 
 function Project(token, data) {
     Object.defineProperties(this, {
         __token: { value: token },
         languages: { value: new Languages(token, data.id) },
+        terms: { value: new Terms(token, data.id) },
 
         id: { value: data.id, enumerable: true },
         name: { value: data.name, enumerable: true },
