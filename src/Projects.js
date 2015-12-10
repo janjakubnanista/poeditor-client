@@ -17,8 +17,8 @@ Projects.prototype.list = function() {
     }.bind(this));
 };
 
-Projects.prototype.add = function(name, description) {
-    return utils.call(this.__token, { action: 'create_project', name: name, description: description }).then(function(response) {
+Projects.prototype.add = function(project) {
+    return utils.call(this.__token, { action: 'create_project', name: project.name, description: project.description }).then(function(response) {
         return this.get(response.response.item.id);
     }.bind(this));
 };

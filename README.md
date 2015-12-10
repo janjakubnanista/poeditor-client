@@ -52,14 +52,13 @@ Lists the project for given API access token. This method returns a promise that
 
 Retrieve details about a single project identified by its `id`. This method returns a promise that resolves with a `Project` object. See [Project section](#components.project) for more info on `Project` objects.
 
-##### create
+##### add
 
-	Promise<Project> create(
-		string name,
-		[string description]
+	Promise<Project> add(
+        object project
 	)
 
-Create new POEditor project with given name and optional description. This method returns a promise that resolves with newly created `Project` object. See [Project section](#components.project) for more info on `Project` objects.
+Create new POEditor project. The `project` parameter must have a string `name` property and an optional `description` property. This method returns a promise that resolves with newly created `Project` object. See [Project section](#components.project) for more info on `Project` objects.
 
 #### Project<a id="components.project"></a>
 
