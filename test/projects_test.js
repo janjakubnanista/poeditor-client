@@ -166,7 +166,7 @@ describe('Projects', function() {
                 done();
             }, done);
 
-            this.deferred.resolve({ item: {} });
+            this.deferred.resolve({ response: { item: { id: 123 } } });
         });
 
         it('should populate project object', function(done) {
@@ -180,7 +180,7 @@ describe('Projects', function() {
                 done();
             }, done);
 
-            this.deferred.resolve({ item: { id: 123 } });
+            this.deferred.resolve({ response: { item: { id: 123 } } });
         });
 
         it('should reject if underlying call rejects', function(done) {

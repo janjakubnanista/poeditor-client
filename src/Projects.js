@@ -19,7 +19,7 @@ Projects.prototype.list = function() {
 
 Projects.prototype.add = function(name, description) {
     return utils.call(this.__token, { action: 'create_project', name: name, description: description }).then(function(response) {
-        return this.get(response.item.id);
+        return this.get(response.response.item.id);
     }.bind(this));
 };
 
