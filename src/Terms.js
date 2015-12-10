@@ -19,4 +19,13 @@ Terms.prototype.list = function() {
     }.bind(this));
 };
 
+Terms.prototype.add = function(terms) {
+    var payload = Array.isArray(terms) ? terms : [terms];
+    var data = JSON.stringify(payload);
+
+    return utils.call(this.__token, { action: 'add_terms', id: this.__projectId, data: data }).then(function(response) {
+        return response.details;
+    });
+};
+
 module.exports = Terms;

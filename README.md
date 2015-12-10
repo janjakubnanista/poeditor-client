@@ -195,6 +195,25 @@ Creates new instance of `Terms` class. You have to pass POEditor API access toke
 
 Lists the terms. This method returns a promise that resolves with an array of `Term` objects. See [Term section](#components.term) for more info on `Term` objects.
 
+##### add
+
+	Promise<object> add(
+		array<object>|Object terms
+	)
+
+Add new terms to project. You can pass either an object with term definition (see below) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `added` is a number of terms that were actually added (excluding terms that already exist in the project), `parsed` is the number of terms you provided.
+
+Each term definition object should have the following structure:
+
+	{
+		string term,
+		[string plural],
+		[string comment],
+		[string context],
+		[string reference],
+		[array<string> tags]
+	}
+
 #### Term<a id="components.term"></a>
 
 `Term` represents a single POEditor term.

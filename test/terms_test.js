@@ -104,4 +104,38 @@ describe('Terms', function() {
             this.deferred.reject();
         });
     });
+
+    describe('add()', function() {
+        beforeEach(function() {
+            this.termData = { term: 'A term' };
+        });
+
+        it('should return a promise', function() {
+            expect(this.terms.add(this.termData).then).to.be.a(Function);
+        });
+
+        it('should send add_terms action', function() {
+            this.terms.add(this.termData);
+
+            expect(this.call.calledWith('my token', { action: 'add_terms', id: 123, data: JSON.stringify([this.termData]) })).to.be(true);
+        });
+
+        it('should resolve with details object', function(done) {
+            this.terms.add(this.termData).done(function(result) {
+                expect(result).to.be.an(Object);
+                expect(result.parsed).to.be(2);
+                expect(result.added).to.be(1);
+
+                done();
+            }, done);
+
+            this.deferred.resolve({ details: { parsed: 2, added: 1 } });
+        });
+
+        it('should reject if underlying call rejects', function(done) {
+            this.terms.add(this.termData).done(null, function() { done(); });
+
+            this.deferred.reject();
+        });
+    });
 });
