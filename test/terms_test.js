@@ -138,4 +138,72 @@ describe('Terms', function() {
             this.deferred.reject();
         });
     });
+
+    describe('delete()', function() {
+        beforeEach(function() {
+            this.termData = { term: 'A term' };
+        });
+
+        it('should return a promise', function() {
+            expect(this.terms.delete(this.termData).then).to.be.a(Function);
+        });
+
+        it('should send delete_terms action', function() {
+            this.terms.delete(this.termData);
+
+            expect(this.call.calledWith('my token', { action: 'delete_terms', id: 123, data: JSON.stringify([this.termData]) })).to.be(true);
+        });
+
+        it('should resolve with details object', function(done) {
+            this.terms.delete(this.termData).done(function(result) {
+                expect(result).to.be.an(Object);
+                expect(result.parsed).to.be(2);
+                expect(result.deleted).to.be(1);
+
+                done();
+            }, done);
+
+            this.deferred.resolve({ details: { parsed: 2, deleted: 1 } });
+        });
+
+        it('should reject if underlying call rejects', function(done) {
+            this.terms.delete(this.termData).done(null, function() { done(); });
+
+            this.deferred.reject();
+        });
+    });
+
+    describe('comment()', function() {
+        beforeEach(function() {
+            this.termData = { term: 'A term' };
+        });
+
+        it('should return a promise', function() {
+            expect(this.terms.comment(this.termData).then).to.be.a(Function);
+        });
+
+        it('should send add_terms action', function() {
+            this.terms.comment(this.termData);
+
+            expect(this.call.calledWith('my token', { action: 'add_comment', id: 123, data: JSON.stringify([this.termData]) })).to.be(true);
+        });
+
+        it('should resolve with details object', function(done) {
+            this.terms.comment(this.termData).done(function(result) {
+                expect(result).to.be.an(Object);
+                expect(result.parsed).to.be(2);
+                expect(result.added).to.be(1);
+
+                done();
+            }, done);
+
+            this.deferred.resolve({ details: { parsed: 2, added: 1 } });
+        });
+
+        it('should reject if underlying call rejects', function(done) {
+            this.terms.comment(this.termData).done(null, function() { done(); });
+
+            this.deferred.reject();
+        });
+    });
 });

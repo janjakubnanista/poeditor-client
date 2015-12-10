@@ -19,13 +19,25 @@ Terms.prototype.list = function() {
     }.bind(this));
 };
 
-Terms.prototype.add = function(terms) {
+Terms.prototype.__action = function(action, terms) {
     var payload = Array.isArray(terms) ? terms : [terms];
     var data = JSON.stringify(payload);
 
-    return utils.call(this.__token, { action: 'add_terms', id: this.__projectId, data: data }).then(function(response) {
+    return utils.call(this.__token, { action: action, id: this.__projectId, data: data }).then(function(response) {
         return response.details;
     });
+};
+
+Terms.prototype.add = function(terms) {
+    return this.__action('add_terms', terms);
+};
+
+Terms.prototype.delete = function(terms) {
+    return this.__action('delete_terms', terms);
+};
+
+Terms.prototype.comment = function(terms) {
+    return this.__action('add_comment', terms);
 };
 
 module.exports = Terms;

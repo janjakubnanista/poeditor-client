@@ -214,6 +214,37 @@ Each term definition object should have the following structure:
 		[array<string> tags]
 	}
 
+##### delete
+
+	Promise<object> delete(
+		array<object>|Object terms
+	)
+
+Deletes terms from project. You can pass either an object with term definition (see below) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `deleted` is a number of terms that were deleted, `parsed` is the number of terms you provided.
+
+Each term definition object should have the following structure:
+
+	{
+		string term,
+		[string context]
+	}
+
+##### comment
+
+	Promise<object> comment(
+		array<object>|Object terms
+	)
+
+Add comment to specified terms. You can pass either an object with term definition (see below) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `added` is a number of terms that were commented on, `parsed` is the number of terms you provided.
+
+Each term definition object should have the following structure:
+
+	{
+		string term,
+		string comment,
+		[string context]
+	}
+
 #### Term<a id="components.term"></a>
 
 `Term` represents a single POEditor term.
