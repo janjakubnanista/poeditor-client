@@ -6,12 +6,15 @@ var sinon = require('sinon');
 var request = require('request');
 
 var utils = require('../src/utils');
+var POEditorError = require('../src/POEditorError');
 
 describe('utils', function() {
     describe('call()', function() {
         beforeEach(function() {
             this.response = { statusCode: 200 };
-            this.postRequest = sinon.stub(request, 'post').yields(null, this.response, '{ "body": true }');
+            this.payload = JSON.stringify({ response: { status: 'success', message: 'OK', code: 200 } });
+
+            this.postRequest = sinon.stub(request, 'post').yields(null, this.response, this.payload);
         });
 
         afterEach(function() {
@@ -47,9 +50,26 @@ describe('utils', function() {
             });
         });
 
+        it('should reject if non-success status is sent back from POEditor', function(done) {
+            var payload = JSON.stringify({ response: { status: 'fail', message: 'Wrong shit', code: 4043 } });
+
+            this.postRequest.yields(null, this.response, payload);
+
+            utils.call('my token', { param: 'value' }).done(null, function(error) {
+                expect(error).to.be.a(POEditorError);
+                expect(error.message).to.be('Wrong shit');
+                expect(error.code).to.be(4043);
+                expect(error.status).to.be('fail');
+                expect(error.response).to.eql({ status: 'fail', message: 'Wrong shit', code: 4043 });
+                expect(error.request).to.eql({ api_token: 'my token', param: 'value' });
+
+                done();
+            });
+        });
+
         it('should resolve with JSON parsed response body', function(done) {
             utils.call('my token').done(function(body) {
-                expect(body).to.eql({ body: true });
+                expect(body).to.eql({ response: { status: 'success', message: 'OK', code: 200 } });
 
                 done();
             }, done);
