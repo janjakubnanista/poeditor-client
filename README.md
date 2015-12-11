@@ -17,6 +17,7 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 - [Getting started](#howto.gettingstarted)
 - [Working with projects](#howto.projects)
 - [Working with project languages](#howto.languages)
+- [Working with project terms](#howto.terms)
 
 
 <a id="howto.gettingstarted"></a>
@@ -117,6 +118,78 @@ You can perform these operations on `Language` objects too, using `setAsreferenc
 	});
 
 
+<a id="howto.terms"></a>
+### Working with project terms
+
+The basic building block of POEditor projects are terms.
+
+If you are not interested in translations of terms for a specific language, you can use `project.terms` object to list, add or comment on terms.
+
+If you need both terms and translations, you have to use `language.terms` object.
+
+Following guide applies to both of these objects, I will assume `termsObject` variable refers to either of forementioned objects.
+
+#### Listing project terms
+
+In order to obtain a list of project terms you need to use `list()` method:
+
+	termsObject.list().then(function(terms) {
+		// Terms is an array of Term objects
+		// See below for what you can do with Term objects
+	});
+	
+#### Adding a term (or an array of terms)
+
+You can add one or more terms at once using `add()` method:
+	
+	termsObject.add(definition).then(function(result) {
+	
+	});
+	
+	termsObject.add(arrayOfDefinitions).then(function(result) {
+	
+	});
+
+You can pass either an object with term definition (see below) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `added` is a number of terms that were added (excluding terms that already existed in the project), `parsed` is the number of terms you provided.
+
+Each term definition object should have the following structure <a id="howto.terms.termdefinition"></a>:
+
+	{
+		string term,
+		[string plural],
+		[string comment],
+		[string context],
+		[string reference],
+		[array<string> tags]
+	}
+	
+#### Deleting a term (or an array of terms)
+
+You can add one or more terms at once using `delete()` method:
+	
+	termsObject.delete(definition).then(function(result) {
+	
+	});
+	
+	termsObject.delete(arrayOfDefinitions).then(function(result) {
+	
+	});
+
+You can pass either an object with [term definition](#howto.terms.termdefinition) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `deleted` is a number of terms that were deleted, `parsed` is the number of terms you provided.
+
+#### Commenting on a term (or an array of terms)
+
+You can add one or more terms at once using `comment()` method:
+	
+	termsObject.comment(definition).then(function(result) {
+	
+	});
+	
+	termsObject.comment(arrayOfDefinitions).then(function(result) {
+	
+	});
+
+You can pass either an object with [term definition](#howto.terms.termdefinition) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `added` is a number of terms that were commented on, `parsed` is the number of terms you provided.
 
 ==================================================================
 
