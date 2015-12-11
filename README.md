@@ -12,7 +12,50 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 
 ## Usage
 
-`poeditor-client` consists of three more or less autonomous submodules for working with Projects, Languages and Contributors. For now there is no CLI tooling, you have to use it as a JavaScript module.
+`poeditor-client` allows you to aceess POEditor's API from your JavaScript code. For now there is no CLI tooling, you have to use it as a JavaScript module.
+
+- [Getting started](#howto.gettingstarted)
+- [Working with projects](#howto.projects)
+
+
+<a id="howto.gettingstarted"></a>
+### Getting started
+
+You have to obtain your POEditor API access key. Please see [POEditor docs on authentication](https://poeditor.com/api_reference/#Authentication) to find out how.
+
+This module exports a class, `POEditorClient`, that you need to instantiate to access all other API operations:
+
+	var POEditorClient = require('poeditor-client');
+	var client = new POEditorClient('<YOUR API ACCESS TOKEN HERE>');
+	
+Following sections will assume you have this `client` variable available in your code.
+
+This module exposes promise-based API.
+
+
+<a id="howto.projects"></a>
+### Working with projects
+
+At the heart of POEditor API there's project. You can list and add projects through `client.projects` object.
+
+#### Listing projects
+
+To list all the projects use `client.projects.list()` method:
+
+	client.projects.list().then(function(projects) {
+		// projects is an array of Project objects
+		// see below for what can you do with a Project object
+	});
+	
+#### Adding a project
+
+To add an empty project use `client.projects.add()` method. This method accepts an object with name and (optional) description keys:
+
+	var definition = { name: 'My project', description: 'Truly amazing POEditor project' };			
+	client.projects.add(definition).then(function(project) {
+		// project is an instance of Project class
+		// see below for what can you do with this project object
+	});
 
 ### Components
 
