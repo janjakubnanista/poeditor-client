@@ -26,11 +26,11 @@ Languages.prototype.delete = function(code) {
     return new Language(this.__token, this.__projectId, { code: code }).delete();
 };
 
-Languages.prototype.setAsReference = function(code) {
+Languages.prototype.setReferenceLanguage = function(code) {
     return new Language(this.__token, this.__projectId, { code: code }).setAsReference();
 };
 
-Languages.prototype.unsetAsReference = function(code) {
+Languages.prototype.unsetReferenceLanguage = function(code) {
     return new Language(this.__token, this.__projectId, { code: code }).unsetAsReference();
 };
 

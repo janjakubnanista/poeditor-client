@@ -16,6 +16,7 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 
 - [Getting started](#howto.gettingstarted)
 - [Working with projects](#howto.projects)
+- [Working with project languages](#howto.languages)
 
 
 <a id="howto.gettingstarted"></a>
@@ -56,6 +57,68 @@ To add an empty project use `client.projects.add()` method. This method accepts 
 		// project is an instance of Project class
 		// see below for what can you do with this project object
 	});
+
+
+<a id="howto.languages"></a>
+### Working with project languages
+
+In order for POEditor project to be functional it needs to have one or more languages attached. 
+
+*Note* In following code examples I will assume there is a `project` variable that represents a single POEditor project. See how you can obtain this object [above](#howto.projects).
+
+You can manipulate with project languages using `project.languages` object.
+
+#### Listing project languages
+
+To list all the projects use `project.languages.list()` method:
+
+	project.languages.list().then(function(languages) {
+		// languages is an array of Language objects
+		// see below for what can you do with a Language object
+	});
+	
+#### Adding a language
+
+To add a language to your project use `project.languages.add()` method. This method accepts an string parameter - a language code:
+
+	project.languages.add('de-at').then(function() {
+		// Yaaaay! You just added an Austrian variant 
+		// of German language to your project!
+	});
+
+#### Deleting a language
+
+To remove particular language from your project use `project.languages.delete()` method. This method accepts an string parameter - a language code:
+
+	project.languages.delete('de-at').then(function() {
+		// Well maybe you didn't like Austrian German that much in the end...
+	});
+	
+#### Setting a reference language
+
+You can set a language to act as a reference language for your project. To do this, two methods are available on `project.languages` object: `setReferenceLanguage()` and `unsetReferenceLanguage()`. They both accept a language code as a parameter:
+
+	project.languages.setReferenceLanguage('de-at').then(function() {
+		// Austrian German is now your reference language
+	});
+	
+	project.languages.unsetReferenceLanguage('de-at').then(function() {
+		// Maybe Austrian German was not what you wanted
+	});
+	
+You can perform these operations on `Language` objects too, using `setAsreference()` and `unsetAsReference()` methods (assuming that you have obtained a `language` object):
+
+	language.setAsReference().then(function() {
+		// The language is now a reference language
+	});
+	
+	language.unsetAsReference().then(function() {
+		// The language is not a reference language anymore
+	});
+
+
+
+==================================================================
 
 ### Components
 
