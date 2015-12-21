@@ -121,37 +121,37 @@ describe('Languages', function() {
         });
     });
 
-    describe('unsetAsReference()', function() {
+    describe('unsetReferenceLanguage()', function() {
         it('should return a promise', function() {
-            expect(this.languages.unsetAsReference('de_DE').then).to.be.a(Function);
+            expect(this.languages.unsetReferenceLanguage('de_DE').then).to.be.a(Function);
         });
 
         it('should send clear_reference_language action', function() {
-            this.languages.unsetAsReference('de_DE');
+            this.languages.unsetReferenceLanguage('de_DE');
 
             expect(this.call.calledWith('my token', { action: 'clear_reference_language', language: 'de_DE', id: 123 })).to.be(true);
         });
 
         it('should reject if underlying call rejects', function(done) {
-            this.languages.unsetAsReference('de_DE').done(null, function() { done(); });
+            this.languages.unsetReferenceLanguage('de_DE').done(null, function() { done(); });
 
             this.deferred.reject();
         });
     });
 
-    describe('setAsReference()', function() {
+    describe('setReferenceLanguage()', function() {
         it('should return a promise', function() {
-            expect(this.languages.setAsReference('de_DE').then).to.be.a(Function);
+            expect(this.languages.setReferenceLanguage('de_DE').then).to.be.a(Function);
         });
 
         it('should send set_reference_language action', function() {
-            this.languages.setAsReference('de_DE');
+            this.languages.setReferenceLanguage('de_DE');
 
             expect(this.call.calledWith('my token', { action: 'set_reference_language', language: 'de_DE', id: 123 })).to.be(true);
         });
 
         it('should reject if underlying call rejects', function(done) {
-            this.languages.setAsReference('de_DE').done(null, function() { done(); });
+            this.languages.setReferenceLanguage('de_DE').done(null, function() { done(); });
 
             this.deferred.reject();
         });
