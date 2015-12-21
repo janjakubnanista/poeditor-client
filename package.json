@@ -18,7 +18,16 @@
     "i18n",
     "l10n"
   ],
-  "author": "Ján Jakub Naništa",
+  "author": {
+      "name": "Ján Jakub Naništa",
+      "email": "jan.jakub.nanista@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Ján Dzurek",
+      "email": "famousgarkin@outlook.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/janjakubnanista/poeditor-client/issues"
