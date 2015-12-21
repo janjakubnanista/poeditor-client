@@ -81,7 +81,7 @@ describe('Project', function() {
             var options = {
                 filters: ['translated', 'fuzzy'],
                 tags: ['Tag 1', 'Tag 2']
-            }
+            };
             this.project.export('de_DE', 'json', options);
 
             expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json', filters: options.filters, tags: options.tags })).to.be(true);
