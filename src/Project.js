@@ -19,4 +19,10 @@ function Project(token, data) {
     });
 }
 
+Project.prototype.export = function(language, type) {
+    return utils.call(this.__token, { action: 'export', id: this.id, language: language, type: type }).then(function(response) {
+        return response.item;
+    });
+};
+
 module.exports = Project;
