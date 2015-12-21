@@ -18,6 +18,7 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 - [Working with projects](#howto.projects)
 	- [Working with project languages](#howto.projects.languages)
 	- [Working with project terms](#howto.projects.terms)
+- [Working with languages](#howto.languages)
 
 
 <a id="howto.gettingstarted"></a>
@@ -190,3 +191,20 @@ You can add one or more terms at once using `comment()` method:
 	});
 
 You can pass either an object with [term definition](#howto.terms.termdefinition) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `added` is a number of terms that were commented on, `parsed` is the number of terms you provided.
+
+<a id="howto.languages"></a>
+### Working with available languages
+
+POEditor API provides a way of listing all available languages. You can then use this list to add languages to your projects.
+
+This API is accessible via `client.languages` object.
+
+#### Listing available languages
+
+To list all available languages use `client.languages.list()` method:
+
+	client.languages.list().then(function(languages) {
+		// languages is an array of objects with name and code property
+	});
+	
+Returned array will contain plain JavaScript objects with `name` (human readable name) and `code` properties.
