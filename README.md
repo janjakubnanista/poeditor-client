@@ -85,7 +85,7 @@ Every `Project` has following read-only properties:
 		string token,
 		string|number projectID
 	)
-	
+
 Creates new instance of `Languages` class. You have to pass POEditor API access token and a Project ID. You should not need to call this constructor manually, instead use `languages` property on a `Project` instance.
 
 
@@ -138,7 +138,7 @@ Unsets a language with language code `code` as a reference language for project.
 		string|number projectID,
 		object data
 	)
-	
+
 Creates new instance of `Language` class. You have to pass POEditor API access token, Project ID and a hash of language `data`:
 
 	{
@@ -257,7 +257,7 @@ Each term definition object should have the following structure:
 		string languageCode,
 		object data
 	)
-	
+
 Creates new instance of `Term` class. You have to pass POEditor API access token, Project ID, language code (can be empty) and a hash of term `data`:
 
 	{
