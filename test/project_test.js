@@ -74,7 +74,17 @@ describe('Project', function() {
         it('should send export action', function() {
             this.project.export('de_DE', 'json');
 
-            expect(this.call.calledWith('my token', { action: 'export', id: 123, language: 'de_DE',  type: 'json'})).to.be(true);
+            expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json' })).to.be(true);
+        });
+
+        it('should support optional arguments', function () {
+            var options = {
+                filters: ['translated', 'fuzzy'],
+                tags: ['Tag 1', 'Tag 2']
+            }
+            this.project.export('de_DE', 'json', options);
+
+            expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json', filters: options.filters, tags: options.tags })).to.be(true);
         });
 
         it('should resolve with an export file URL', function (done) {
@@ -83,9 +93,7 @@ describe('Project', function() {
                 done();
             }, done);
 
-            this.deferred.resolve({
-                item: 'http://my-file-url'
-            });
+            this.deferred.resolve({ item: 'http://my-file-url' });
         });
     });
 });

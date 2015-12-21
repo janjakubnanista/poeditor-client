@@ -1,5 +1,7 @@
 'use strict';
 
+var assign = require('object-assign');
+
 var Languages = require('./Languages');
 var Terms = require('./Terms');
 var utils = require('./utils');
@@ -19,8 +21,9 @@ function Project(token, data) {
     });
 }
 
-Project.prototype.export = function(language, type) {
-    return utils.call(this.__token, { action: 'export', id: this.id, language: language, type: type }).then(function(response) {
+Project.prototype.export = function(language, type, options) {
+    var params = assign({}, options, { action: 'export', id: this.id, language: language, type: type });
+    return utils.call(this.__token, params).then(function(response) {
         return response.item;
     });
 };
