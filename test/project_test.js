@@ -2,10 +2,30 @@
 
 require('mocha');
 var expect = require('expect.js');
+var sinon = require('sinon');
+var utils = require('../src/utils');
+var q = require('q');
 
 var Project = require('../src/Project');
 
 describe('Project', function() {
+    beforeEach(function() {
+        this.deferred = q.defer();
+
+        this.call = sinon.stub(utils, 'call').returns(this.deferred.promise);
+        this.project = new Project('my token', {
+            id: 123
+        });
+    });
+
+    afterEach(function() {
+        this.call.restore();
+
+        delete this.call;
+        delete this.deferred;
+        delete this.project;
+    });
+
     describe('new Project(token, params)', function() {
         function testProperty(name, value, expected) {
             var params = {};
@@ -47,6 +67,33 @@ describe('Project', function() {
 
         it('should set open to false if params.open is 0', function() {
             testProperty('open', '0', false);
+        });
+    });
+
+    describe('export()', function () {
+        it('should send export action', function() {
+            this.project.export('de_DE', 'json');
+
+            expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json' })).to.be(true);
+        });
+
+        it('should support optional arguments', function () {
+            var options = {
+                filters: ['translated', 'fuzzy'],
+                tags: ['Tag 1', 'Tag 2']
+            };
+            this.project.export('de_DE', 'json', options);
+
+            expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json', filters: options.filters, tags: options.tags })).to.be(true);
+        });
+
+        it('should resolve with an export file URL', function (done) {
+            this.project.export('en', 'json').done(function(url) {
+                expect(url).to.be('http://my-file-url');
+                done();
+            }, done);
+
+            this.deferred.resolve({ item: 'http://my-file-url' });
         });
     });
 });
