@@ -12,12 +12,12 @@ JavaScript client for [POEditor](http://poeditor.com) translations solution.
 
 ## Usage
 
-`poeditor-client` allows you to aceess POEditor's API from your JavaScript code. For now there is no CLI tooling, you have to use it as a JavaScript module.
+`poeditor-client` allows you to access POEditor's API from your JavaScript code. For now there is no CLI tooling, you have to use it as a JavaScript module.
 
 - [Getting started](#howto.gettingstarted)
 - [Working with projects](#howto.projects)
-- [Working with project languages](#howto.languages)
-- [Working with project terms](#howto.terms)
+	- [Working with project languages](#howto.projects.languages)
+	- [Working with project terms](#howto.projects.terms)
 
 
 <a id="howto.gettingstarted"></a>
@@ -60,10 +60,10 @@ To add an empty project use `client.projects.add()` method. This method accepts 
 	});
 
 
-<a id="howto.languages"></a>
+<a id="howto.projects.languages"></a>
 ### Working with project languages
 
-In order for POEditor project to be functional it needs to have one or more languages attached. 
+In order for POEditor project to be functional it needs to have one or more languages attached.
 
 *Note* In following code examples I will assume there is a `project` variable that represents a single POEditor project. See how you can obtain this object [above](#howto.projects).
 
@@ -118,7 +118,7 @@ You can perform these operations on `Language` objects too, using `setAsreferenc
 	});
 
 
-<a id="howto.terms"></a>
+<a id="howto.projects.terms"></a>
 ### Working with project terms
 
 The basic building block of POEditor projects are terms.
