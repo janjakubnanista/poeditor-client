@@ -33,4 +33,11 @@ Language.prototype.unsetAsReference = function() {
     }.bind(this));
 };
 
+Language.prototype.export = function(options) {
+    var params = assign({}, options, { action: 'export', id: this.id, language: this.code });
+    return utils.call(this.__token, params).then(function(response) {
+        return response.item;
+    });
+};
+
 module.exports = Language;

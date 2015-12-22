@@ -70,6 +70,7 @@ In order for POEditor project to be functional it needs to have one or more lang
 
 You can manipulate with project languages using `project.languages` object.
 
+<a id="howto.projects.languages.listing"></a>
 #### Listing project languages
 
 To list all project languages use `project.languages.list()` method:
@@ -191,6 +192,30 @@ You can add one or more terms at once using `comment()` method:
 	});
 
 You can pass either an object with [term definition](#howto.terms.termdefinition) or an array of these objects. This method returns a promise that resoves with an object containing two keys - `added` is a number of terms that were commented on, `parsed` is the number of terms you provided.
+
+#### Exporting project terms
+
+You can export project terms to file(s) using `project.export()` method on single `project` object:
+
+	// Check POEditor API reference for more info on export options
+	var options = {
+		type: 'po',
+		tags: ['cool feature'],
+		filters: ['translated', 'not_fuzzy']
+	};
+
+	project.export(options).then(function(fileNames) {
+		// fileNames is an array of exported file URLs
+	});
+
+This method exports **all** project languages. In case you only want to export a single language, you have to obtain a single `language` object. See how to do that [here](#howto.projects.languages.listing).
+
+You can then use `language.export()` method to export a single language:
+
+	// Options are the same as above
+	project.export(options).then(function(fileName) {
+		// fileName is exported file URL
+	});
 
 <a id="howto.languages"></a>
 ### Working with available languages
