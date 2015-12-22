@@ -72,7 +72,7 @@ You can manipulate with project languages using `project.languages` object.
 
 #### Listing project languages
 
-To list all the projects use `project.languages.list()` method:
+To list all project languages use `project.languages.list()` method:
 
 	project.languages.list().then(function(languages) {
 		// languages is an array of Language objects
@@ -206,5 +206,5 @@ To list all available languages use `client.languages.list()` method:
 	client.languages.list().then(function(languages) {
 		// languages is an array of objects with name and code property
 	});
-	
+
 Returned array will contain plain JavaScript objects with `name` (human readable name) and `code` properties.
