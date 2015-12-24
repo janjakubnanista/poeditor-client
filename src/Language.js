@@ -1,5 +1,7 @@
 'use strict';
 
+var assign = require('object-assign');
+
 var Terms = require('./Terms');
 var utils = require('./utils');
 
@@ -34,7 +36,7 @@ Language.prototype.unsetAsReference = function() {
 };
 
 Language.prototype.export = function(options) {
-    var params = assign({}, options, { action: 'export', id: this.id, language: this.code });
+    var params = assign({}, options, { action: 'export', id: this.__projectId, language: this.code });
     return utils.call(this.__token, params).then(function(response) {
         return response.item;
     });

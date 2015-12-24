@@ -21,7 +21,7 @@ describe('Language', function() {
 
         delete this.call;
         delete this.deferred;
-        delete this.languages;
+        delete this.language;
     });
 
     describe('setAsReference()', function() {
@@ -75,6 +75,33 @@ describe('Language', function() {
             this.language.delete().done(null, function() { done(); });
 
             this.deferred.reject();
+        });
+    });
+
+    describe('export()', function() {
+        it('should return a promise', function() {
+            expect(this.language.export().then).to.be.a(Function);
+        });
+
+        it('should send export action', function () {
+            this.language.export();
+
+            expect(this.call.calledWith('my token', { action: 'export', language: 'de_DE', id: 123 })).to.be(true);
+        });
+
+        it('should support options', function () {
+            this.language.export({ type: 'my type' });
+
+            expect(this.call.calledWith('my token', { action: 'export', language: 'de_DE', id: 123, type: 'my type' })).to.be(true);
+        });
+
+        it('should resolve with an export file download URL', function (done) {
+            this.language.export().done(function (url) {
+                expect(url).to.be('http://my-url');
+                done();
+            }, done);
+
+            this.deferred.resolve({ item: 'http://my-url' });
         });
     });
 });
