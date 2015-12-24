@@ -1,11 +1,9 @@
 'use strict';
 
-var assign = require('object-assign');
+var q = require('q');
 
 var Languages = require('./Languages');
 var Terms = require('./Terms');
-var utils = require('./utils');
-var q = require('q');
 
 function Project(token, data) {
     Object.defineProperties(this, {

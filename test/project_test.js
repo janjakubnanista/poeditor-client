@@ -3,26 +3,18 @@
 require('mocha');
 var expect = require('expect.js');
 var sinon = require('sinon');
-var utils = require('../src/utils');
 var q = require('q');
 
 var Project = require('../src/Project');
 
 describe('Project', function() {
     beforeEach(function() {
-        this.deferred = q.defer();
-
-        this.call = sinon.stub(utils, 'call').returns(this.deferred.promise);
         this.project = new Project('my token', {
             id: 123
         });
     });
 
     afterEach(function() {
-        this.call.restore();
-
-        delete this.call;
-        delete this.deferred;
         delete this.project;
     });
 
@@ -71,29 +63,53 @@ describe('Project', function() {
     });
 
     describe('export()', function () {
-        it('should send export action', function() {
-            this.project.export('de_DE', 'json');
-
-            expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json' })).to.be(true);
+        beforeEach(function () {
+            this.languageExport = sinon.stub();
+            this.urls = [
+                'http://my-url-1',
+                'http://my-url-2'
+            ];
+            this.urls.forEach(function (url, i) {
+                this.languageExport.onCall(i).returns(q.Promise.resolve(url));
+            }.bind(this));
+            this.languagesList = sinon.stub(this.project.languages, 'list').returns(q.Promise.resolve([
+                { export: this.languageExport },
+                { export: this.languageExport }
+            ]));
         });
 
-        it('should support optional arguments', function () {
-            var options = {
-                filters: ['translated', 'fuzzy'],
-                tags: ['Tag 1', 'Tag 2']
-            };
-            this.project.export('de_DE', 'json', options);
+        afterEach(function () {
+            this.languagesList.restore();
 
-            expect(this.call.calledWith('my token', {action: 'export', id: 123, language: 'de_DE', type: 'json', filters: options.filters, tags: options.tags })).to.be(true);
+            delete this.languageExport;
+            delete this.languagesList;
         });
 
-        it('should resolve with an export file URL', function (done) {
-            this.project.export('en', 'json').done(function(url) {
-                expect(url).to.be('http://my-file-url');
+        it('should return a promise', function() {
+            expect(this.project.export().then).to.be.a(Function);
+        });
+
+        it('should invoke Language.export() per project language', function(done) {
+            this.project.export().done(function () {
+                expect(this.languageExport.calledTwice).to.be(true);
                 done();
-            }, done);
+            }.bind(this), done);
 
-            this.deferred.resolve({ item: 'http://my-file-url' });
+        });
+
+        it('should pass options to Language.export()', function (done) {
+            var options = {};
+            this.project.export(options).done(function () {
+                expect(this.languageExport.calledWith(options)).to.be(true);
+                done();
+            }.bind(this), done);
+        });
+
+        it('should resolve with an array of export file download URLs (one file per project language)', function (done) {
+            this.project.export().done(function(urls) {
+                expect(urls).to.eql(this.urls);
+                done();
+            }.bind(this), done);
         });
     });
 });
