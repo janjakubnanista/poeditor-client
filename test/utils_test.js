@@ -36,7 +36,7 @@ describe('utils', function() {
 
         it('should add API token to POST form data', function(done) {
             utils.call('my token', { action: 'list_projects' }).done(function() {
-                expect(this.postRequest.calledWith('https://poeditor.com/api/', { form: { api_token: 'my token', action: 'list_projects' } })).to.be(true);
+                expect(this.postRequest.calledWith('https://poeditor.com/api/', { formData: { api_token: 'my token', action: 'list_projects' } })).to.be(true);
 
                 done();
             }.bind(this), done);

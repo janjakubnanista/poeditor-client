@@ -104,4 +104,52 @@ describe('Language', function() {
             this.deferred.resolve({ item: 'http://my-url' });
         });
     });
+
+    describe('upload()', function() {
+        it('should return a promise', function() {
+            expect(this.language.upload().then).to.be.a(Function);
+        });
+
+        it('should send upload action', function () {
+            this.language.upload();
+
+            expect(this.call.calledWith('my token', { action: 'upload', language: 'de_DE', id: 123, updating: 'definitions' })).to.be(true);
+        });
+
+        it('should set file param when terms exists', function () {
+            var terms = [{
+                term: 'test',
+                definition: 'translated'
+            }]
+            this.language.upload(terms);
+
+            var fileObject = {
+                value: JSON.stringify(terms),
+                options: {filename: 'upload.json', contentType: 'application/json'}
+            }
+            expect(this.call.calledWith('my token', { action: 'upload', language: 'de_DE', id: 123, updating: 'definitions', file: fileObject })).to.be(true);
+        });
+
+        it('should support options', function () {
+            this.language.upload(null, { updating: 'terms_definitions' });
+
+            expect(this.call.calledWith('my token', { action: 'upload', language: 'de_DE', id: 123, updating: 'terms_definitions' })).to.be(true);
+        });
+
+        it('should convert options overwrite and sync_terms to numbers', function () {
+            this.language.upload(null, { overwrite: true, sync_terms: false });
+
+            expect(this.call.calledWith('my token', { action: 'upload', language: 'de_DE', id: 123, updating: 'definitions', overwrite: 1, sync_terms: 0 })).to.be(true);
+        });
+
+        it('should resolve with an upload details', function (done) {
+            var result = { definitions: { parsed: 0, added: 0, updated: 0} };
+            this.language.upload().done(function (details) {
+                expect(details).to.be(result);
+                done();
+            }, done);
+
+            this.deferred.resolve({ details: result });
+        });
+    });
 });

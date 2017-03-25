@@ -42,4 +42,29 @@ Language.prototype.export = function(options) {
     });
 };
 
+Language.prototype.upload = function(terms, options) {
+    var params = assign({
+        updating: 'definitions'
+    }, options, {
+        action: 'upload',
+        id: this.__projectId,
+        language: this.code,
+    });
+    if (terms) {
+        params.file = {
+            value: JSON.stringify(terms),
+            options: {filename: 'upload.json', contentType: 'application/json'}
+        };
+    }
+    if (params.hasOwnProperty('overwrite')) {
+        params.overwrite = params.overwrite ? 1 : 0;
+    }
+    if (params.hasOwnProperty('sync_terms')) {
+        params.sync_terms = params.sync_terms ? 1 : 0;
+    }
+    return utils.call(this.__token, params).then(function(response) {
+        return response.details;
+    });
+};
+
 module.exports = Language;
